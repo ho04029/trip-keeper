@@ -10,8 +10,8 @@ import Spinner from "@/components/spinner";
 export default function Home() {
   const { isAuthenticated, isLoading } = useConvexAuth();
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <header className="absolute top-0 left-0 flex">
+    <div className="flex min-h-screen flex-col items-center justify-between">
+      <header className="absolute top-0 left-0 flex  w-full bg-white dark:bg-black">
         <ModeToggle />
         {isLoading && <Spinner />}
         {!isAuthenticated && !isLoading && (
@@ -29,6 +29,12 @@ export default function Home() {
           </>
         )}
       </header>
-    </main>
+      <main className="w-full">
+        <section className="box-border w-full flex p-24 bg-black">
+          <div className="w-[193px] h-[128px] "></div>
+        </section>
+        <section></section>
+      </main>
+    </div>
   );
 }

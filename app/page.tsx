@@ -30,8 +30,13 @@ export default function Home() {
         )}
       </header>
       <main className="w-full">
-        <section className="box-border w-full flex p-24 bg-black">
-          <div className="w-[193px] h-[128px] "></div>
+        <section className="box-border w-full flex flex-col justify-center items-center p-24 overflow-visible content-center flex-nowrap gap-2.5  bg-black">
+          <div className="">
+            <div className="w-[193px] h-[128px] overflow-visible block absolute">
+              <div className="w-[128px] h-[128px] block overflow-hidden aspect-square bg-white bg-cover bg-no-repeat bg-center absolute rounded-full"></div>
+              <div className="w-[128px] h-[128px] block overflow-hidden aspect-square bg-[#98f5e1] absolute rounded-full"></div>
+            </div>
+          </div>
         </section>
         <section></section>
       </main>

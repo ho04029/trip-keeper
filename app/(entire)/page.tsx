@@ -1,3 +1,5 @@
+import { Button } from "@/components/ui/button";
+
 export default function Home() {
   return (
     <main className="w-full absolute top-10 h-min min-h-[800px]">
@@ -10,9 +12,9 @@ export default function Home() {
           <h1 className="w-full h-auto whitespace-pre-wrap max-w-[800px] text-title-color text-7xl break-words break-all tracking-normal leading-normal">
             여행이 더 아름다워지는 곳, 트립키퍼
           </h1>
-          <div className="box-border w-auto h-auto flex flex-row justify-center items-center p-10 bg-[#fde4cf] overflow-hidden content-center gap-10">
+          <Button variant="landig" size="lg">
             여정시작하기
-          </div>
+          </Button>
         </div>
       </section>
       <section></section>

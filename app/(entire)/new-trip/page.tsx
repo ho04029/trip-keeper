@@ -3,6 +3,10 @@
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { format, addDays } from "date-fns";
+import { DateRange } from "react-day-picker";
+
+import { Calendar as CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,12 +18,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const formSchema = z.object({
   title: z.string().min(2, { message: "최소 2글자 이상을 입력해주세요" }),
-  date: z.string(),
-  schedule: z.array(z.string()),
-  isPublished: z.boolean(),
+  date: z.date(),
+  //schedule: z.array(z.string()),
+  //isPublished: z.boolean(),
 });
 
 const NewTrip = () => {
@@ -27,12 +37,11 @@ const NewTrip = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      isPublished: false,
+      //isPublished: false,
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log("here");
     console.log(values);
   };
 
@@ -41,6 +50,7 @@ const NewTrip = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <FormField
+            control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem>
@@ -49,6 +59,37 @@ const NewTrip = () => {
                   <Input {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="date"
+            render={({ field }) => (
+              <FormItem className="flex flex-col">
+                <FormLabel>여행날짜</FormLabel>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button variant={"outline"}>
+                        {field.value ? (
+                          format(field.value, "yyyy-MM-dd")
+                        ) : (
+                          <span>날짜를 선택해주세요</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Calendar
+                      mode="single"
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
               </FormItem>
             )}
           />

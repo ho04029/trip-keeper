@@ -27,7 +27,10 @@ import {
 
 const formSchema = z.object({
   title: z.string().min(2, { message: "최소 2글자 이상을 입력해주세요" }),
-  date: z.date(),
+  date: z.object({
+    from: z.date(),
+    to: z.date(),
+  }),
   //schedule: z.array(z.string()),
   //isPublished: z.boolean(),
 });
@@ -72,8 +75,15 @@ const NewTrip = () => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button variant={"outline"}>
-                        {field.value ? (
-                          format(field.value, "yyyy-MM-dd")
+                        {field.value?.from ? (
+                          field.value.to ? (
+                            <>
+                              {format(field.value.from, "yy년 MM월 dd일")} -{" "}
+                              {format(field.value.to, "yy년 MM월 dd일")}
+                            </>
+                          ) : (
+                            format(field.value.from, "yy년 MM월 dd일")
+                          )
                         ) : (
                           <span>날짜를 선택해주세요</span>
                         )}
@@ -83,7 +93,7 @@ const NewTrip = () => {
                   </PopoverTrigger>
                   <PopoverContent>
                     <Calendar
-                      mode="single"
+                      mode="range"
                       selected={field.value}
                       onSelect={field.onChange}
                       initialFocus

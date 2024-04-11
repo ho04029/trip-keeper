@@ -4,7 +4,10 @@ import { mutation, query } from "./_generated/server";
 export const createNewTrip = mutation({
   args: {
     title: v.string(),
-    date: v.string(),
+    date: v.object({
+      from: v.string(),
+      to: v.string(),
+    }),
     schedule: v.array(v.string()),
     isPublished: v.boolean(),
   },

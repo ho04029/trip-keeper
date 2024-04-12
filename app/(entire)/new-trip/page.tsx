@@ -1,10 +1,10 @@
 "use client";
+import { useEffect } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { format, addDays } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { useForm, useWatch } from "react-hook-form";
+import { format } from "date-fns";
 
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -43,6 +43,16 @@ const NewTrip = () => {
       //isPublished: false,
     },
   });
+
+  const dateWatch = useWatch({ control: form.control, name: "date" });
+
+  useEffect(() => {
+    const diffDate = Math.abs(
+      (dateWatch?.to?.getTime() - dateWatch?.from.getTime()) /
+        (1000 * 60 * 60 * 24)
+    );
+    console.log(diffDate);
+  }, [dateWatch]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values);

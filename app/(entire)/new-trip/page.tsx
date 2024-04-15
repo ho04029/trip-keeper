@@ -1,10 +1,10 @@
 "use client";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, useWatch } from "react-hook-form";
-import { format } from "date-fns";
+import { format, eachDayOfInterval } from "date-fns";
 
 import { Calendar as CalendarIcon } from "lucide-react";
 
@@ -31,7 +31,7 @@ const formSchema = z.object({
     from: z.date(),
     to: z.date(),
   }),
-  //schedule: z.array(z.string()),
+  schedule: z.map(z.date(), z.array(z.string())),
   //isPublished: z.boolean(),
 });
 
@@ -44,14 +44,17 @@ const NewTrip = () => {
     },
   });
 
+  const [selectedDates, setSelectedDates] = useState<Date[]>();
   const dateWatch = useWatch({ control: form.control, name: "date" });
 
   useEffect(() => {
-    const diffDate = Math.abs(
-      (dateWatch?.to?.getTime() - dateWatch?.from.getTime()) /
-        (1000 * 60 * 60 * 24)
-    );
-    console.log(diffDate);
+    if (dateWatch && dateWatch.from && dateWatch.to) {
+      const days = eachDayOfInterval({
+        start: new Date(dateWatch.from),
+        end: new Date(dateWatch.to),
+      });
+      setSelectedDates(days);
+    }
   }, [dateWatch]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -113,6 +116,7 @@ const NewTrip = () => {
               </FormItem>
             )}
           />
+
           <Button type="submit">저장</Button>
         </form>
       </Form>

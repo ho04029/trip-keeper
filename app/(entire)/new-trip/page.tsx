@@ -1,9 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm, useWatch, useFieldArray } from "react-hook-form";
 import { format, eachDayOfInterval } from "date-fns";
 
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -31,7 +31,12 @@ const formSchema = z.object({
     from: z.date(),
     to: z.date(),
   }),
-  schedule: z.map(z.date(), z.array(z.string())),
+  schedule: z.array(
+    z.object({
+      date: z.date(),
+      detail_schedule: z.array(z.string()),
+    })
+  ),
   //isPublished: z.boolean(),
 });
 
@@ -40,12 +45,13 @@ const NewTrip = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      schedule: [],
       //isPublished: false,
     },
   });
 
-  const [selectedDates, setSelectedDates] = useState<Date[]>();
   const dateWatch = useWatch({ control: form.control, name: "date" });
+  const { fields } = useFieldArray({ control: form.control, name: "schedule" });
 
   useEffect(() => {
     if (dateWatch && dateWatch.from && dateWatch.to) {
@@ -53,7 +59,11 @@ const NewTrip = () => {
         start: new Date(dateWatch.from),
         end: new Date(dateWatch.to),
       });
-      setSelectedDates(days);
+      const newSchedule = days.map((day) => ({
+        date: day,
+        detail_schedule: [],
+      }));
+      form.setValue("schedule", newSchedule);
     }
   }, [dateWatch]);
 
@@ -116,7 +126,21 @@ const NewTrip = () => {
               </FormItem>
             )}
           />
-
+          {fields.map((item, idx) => {
+            return (
+              <FormField
+                key={item.id}
+                name={`schedule.${idx}.name`}
+                render={({ field }) => (
+                  <FormItem>
+                    <div>
+                      <FormLabel>{field.value}</FormLabel>
+                    </div>
+                  </FormItem>
+                )}
+              />
+            );
+          })}
           <Button type="submit">저장</Button>
         </form>
       </Form>

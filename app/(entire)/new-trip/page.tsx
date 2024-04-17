@@ -24,6 +24,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Textarea } from "@/components/ui/textarea";
 
 const formSchema = z.object({
   title: z.string().min(2, { message: "최소 2글자 이상을 입력해주세요" }),
@@ -34,7 +35,7 @@ const formSchema = z.object({
   schedule: z.array(
     z.object({
       date: z.date(),
-      detail_schedule: z.array(z.string()),
+      detail_schedule: z.string(),
     })
   ),
   //isPublished: z.boolean(),
@@ -61,7 +62,7 @@ const NewTrip = () => {
       });
       const newSchedule = days.map((day) => ({
         date: day,
-        detail_schedule: [],
+        detail_schedule: "",
       }));
       form.setValue("schedule", newSchedule);
     }
@@ -126,21 +127,23 @@ const NewTrip = () => {
               </FormItem>
             )}
           />
-          {fields.map((item, idx) => {
-            return (
-              <FormField
-                key={item.id}
-                name={`schedule.${idx}.name`}
-                render={({ field }) => (
-                  <FormItem>
-                    <div>
-                      <FormLabel>{field.value}</FormLabel>
-                    </div>
-                  </FormItem>
-                )}
-              />
-            );
-          })}
+          {fields.map((item, idx) => (
+            <FormField
+              control={form.control}
+              key={item.id}
+              name={`schedule.${idx}.detail_schedule`}
+              render={({ field }) => (
+                <FormItem>
+                  <div>
+                    <FormLabel>{format(item.date, "yy년 MM월 dd일")}</FormLabel>
+                    <FormControl>
+                      <Textarea {...field} />
+                    </FormControl>
+                  </div>
+                </FormItem>
+              )}
+            />
+          ))}
           <Button type="submit">저장</Button>
         </form>
       </Form>

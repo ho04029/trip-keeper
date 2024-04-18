@@ -8,8 +8,12 @@ export const createNewTrip = mutation({
       from: v.string(),
       to: v.string(),
     }),
-    schedule: v.array(v.string()),
-    isPublished: v.boolean(),
+    schedule: v.array(
+      v.object({
+        date: v.string(),
+        detail_schedule: v.string(),
+      })
+    ),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -25,7 +29,7 @@ export const createNewTrip = mutation({
       date: args.date,
       userId,
       schedule: args.schedule,
-      isPublished: args.isPublished,
+      isPublished: false,
       isArchived: false,
     });
 

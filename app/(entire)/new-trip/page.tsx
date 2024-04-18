@@ -1,5 +1,7 @@
 "use client";
 import { useEffect } from "react";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,16 +31,15 @@ import { Textarea } from "@/components/ui/textarea";
 const formSchema = z.object({
   title: z.string().min(2, { message: "최소 2글자 이상을 입력해주세요" }),
   date: z.object({
-    from: z.date(),
-    to: z.date(),
+    from: z.string(),
+    to: z.string(),
   }),
   schedule: z.array(
     z.object({
-      date: z.date(),
+      date: z.string(),
       detail_schedule: z.string(),
     })
   ),
-  //isPublished: z.boolean(),
 });
 
 const NewTrip = () => {
@@ -46,13 +47,17 @@ const NewTrip = () => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
+      date: {
+        from: "",
+        to: "",
+      },
       schedule: [],
-      //isPublished: false,
     },
   });
 
   const dateWatch = useWatch({ control: form.control, name: "date" });
   const { fields } = useFieldArray({ control: form.control, name: "schedule" });
+  const create = useMutation(api.documents.createNewTrip);
 
   useEffect(() => {
     if (dateWatch && dateWatch.from && dateWatch.to) {
@@ -61,7 +66,7 @@ const NewTrip = () => {
         end: new Date(dateWatch.to),
       });
       const newSchedule = days.map((day) => ({
-        date: day,
+        date: format(day, "yy년 MM월 dd일"),
         detail_schedule: "",
       }));
       form.setValue("schedule", newSchedule);
@@ -118,7 +123,10 @@ const NewTrip = () => {
                   <PopoverContent>
                     <Calendar
                       mode="range"
-                      selected={field.value}
+                      selected={{
+                        from: new Date(field.value.from),
+                        to: new Date(field.value.to),
+                      }}
                       onSelect={field.onChange}
                       initialFocus
                     />
@@ -135,7 +143,7 @@ const NewTrip = () => {
               render={({ field }) => (
                 <FormItem>
                   <div>
-                    <FormLabel>{format(item.date, "yy년 MM월 dd일")}</FormLabel>
+                    <FormLabel>{item.date}</FormLabel>
                     <FormControl>
                       <Textarea {...field} />
                     </FormControl>

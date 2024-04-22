@@ -31,8 +31,8 @@ import { Textarea } from "@/components/ui/textarea";
 const formSchema = z.object({
   title: z.string().min(2, { message: "최소 2글자 이상을 입력해주세요" }),
   date: z.object({
-    from: z.string(),
-    to: z.string(),
+    from: z.date(),
+    to: z.date(),
   }),
   schedule: z.array(
     z.object({
@@ -62,8 +62,8 @@ const NewTrip = () => {
   useEffect(() => {
     if (dateWatch && dateWatch.from && dateWatch.to) {
       const days = eachDayOfInterval({
-        start: new Date(dateWatch.from),
-        end: new Date(dateWatch.to),
+        start: dateWatch.from,
+        end: dateWatch.to,
       });
       const newSchedule = days.map((day) => ({
         date: format(day, "yy년 MM월 dd일"),
@@ -74,7 +74,14 @@ const NewTrip = () => {
   }, [dateWatch]);
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    const newSchedule = {
+      ...values,
+      date: {
+        from: format(values.date.from, "yyyy-MM-dd"),
+        to: format(values.date.to, "yyyy-MM-dd"),
+      },
+    };
+    create(newSchedule);
   };
 
   return (
@@ -107,10 +114,11 @@ const NewTrip = () => {
                         {field.value?.from ? (
                           field.value.to ? (
                             <>
-                              {field.value.from} - {field.value.to}
+                              {format(field.value.from, "yyyy년 MM월 dd일")} -{" "}
+                              {format(field.value.to, "yyyy년 MM월 dd일")}
                             </>
                           ) : (
-                            field.value.from
+                            format(field.value.from, "yyyy년 MM월 dd일")
                           )
                         ) : (
                           <span>날짜를 선택해주세요</span>
@@ -123,8 +131,8 @@ const NewTrip = () => {
                     <Calendar
                       mode="range"
                       selected={{
-                        from: new Date(field.value.from),
-                        to: new Date(field.value.to),
+                        from: field.value.from,
+                        to: field.value.to,
                       }}
                       onSelect={field.onChange}
                       initialFocus

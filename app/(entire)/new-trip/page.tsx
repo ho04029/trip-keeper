@@ -104,18 +104,17 @@ const NewTrip = () => {
                   <PopoverTrigger asChild>
                     <FormControl>
                       <Button variant={"outline"}>
-                        {/* {field.value?.from ? (
+                        {field.value?.from ? (
                           field.value.to ? (
                             <>
-                              {format(field.value.from, "yy년 MM월 dd일")} -{" "}
-                              {format(field.value.to, "yy년 MM월 dd일")}
+                              {field.value.from} - {field.value.to}
                             </>
                           ) : (
-                            format(field.value.from, "yy년 MM월 dd일")
+                            field.value.from
                           )
                         ) : (
                           <span>날짜를 선택해주세요</span>
-                        )} */}
+                        )}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>

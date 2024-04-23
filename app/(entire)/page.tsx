@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -12,9 +13,11 @@ export default function Home() {
           <h1 className="w-full h-auto whitespace-pre-wrap max-w-[800px] text-title-color text-7xl break-words break-all tracking-normal leading-normal">
             여행이 더 아름다워지는 곳, 트립키퍼
           </h1>
-          <Button variant="landig" size="lg">
-            여정시작하기
-          </Button>
+          <Link href="/new-trip">
+            <Button variant="landig" size="lg">
+              여정시작하기
+            </Button>
+          </Link>
         </div>
       </section>
       <section></section>

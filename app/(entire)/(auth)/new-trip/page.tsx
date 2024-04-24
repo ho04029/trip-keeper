@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
-import { redirect, useRouter } from "next/navigation";
-import { useMutation, useConvexAuth } from "convex/react";
+import { useRouter } from "next/navigation";
+import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 import { z } from "zod";
@@ -56,7 +56,6 @@ const NewTrip = () => {
     },
   });
 
-  const { isAuthenticated } = useConvexAuth();
   const dateWatch = useWatch({ control: form.control, name: "date" });
   const { fields } = useFieldArray({ control: form.control, name: "schedule" });
   const create = useMutation(api.documents.createNewTrip);
@@ -87,10 +86,6 @@ const NewTrip = () => {
     const promise = create(newSchedule);
     promise.then(() => router.back());
   };
-
-  if (!isAuthenticated) {
-    return redirect("/");
-  }
 
   return (
     <main className="absolute top-10">

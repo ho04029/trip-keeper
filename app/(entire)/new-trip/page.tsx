@@ -1,8 +1,8 @@
 "use client";
 import { useEffect } from "react";
+import { redirect, useRouter } from "next/navigation";
 import { useMutation, useConvexAuth } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { redirect } from "next/navigation";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,6 +60,7 @@ const NewTrip = () => {
   const dateWatch = useWatch({ control: form.control, name: "date" });
   const { fields } = useFieldArray({ control: form.control, name: "schedule" });
   const create = useMutation(api.documents.createNewTrip);
+  const router = useRouter();
 
   useEffect(() => {
     if (dateWatch && dateWatch.from && dateWatch.to) {
@@ -83,7 +84,8 @@ const NewTrip = () => {
         to: format(values.date.to, "yyyy-MM-dd"),
       },
     };
-    create(newSchedule);
+    const promise = create(newSchedule);
+    promise.then(() => router.back());
   };
 
   if (!isAuthenticated) {

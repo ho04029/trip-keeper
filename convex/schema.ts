@@ -17,5 +17,5 @@ export default defineSchema({
     ),
     isArchived: v.boolean(),
     isPublished: v.boolean(),
-  }),
+  }).index("by_user", ["userId"]),
 });

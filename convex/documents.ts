@@ -36,3 +36,21 @@ export const createNewTrip = mutation({
     return trip;
   },
 });
+
+export const getMyTrip = query({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const trip = await ctx.db
+      .query("trip")
+      .withIndex("by_user", (q) => q.eq("userId", userId));
+
+    return trip;
+  },
+});

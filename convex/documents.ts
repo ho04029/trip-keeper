@@ -49,7 +49,8 @@ export const getMyTrip = query({
 
     const trip = await ctx.db
       .query("trip")
-      .withIndex("by_user", (q) => q.eq("userId", userId));
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .collect();
 
     return trip;
   },

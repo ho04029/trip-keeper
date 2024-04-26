@@ -1,5 +1,5 @@
 "use client";
-import Header from "./_components/header";
+import Header from "../../container/header";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -7,10 +7,10 @@ export default function Home() {
   const myTrips = useGetMyTripList();
 
   return (
-    <main className="w-full absolute top-10 h-min min-h-[800px]">
-      <section className="box-border w-full  absolute flex flex-col justify-center items-center p-24 overflow-visible content-center gap-2.5 bg-black">
-        <div className="box-border w-full flex flex-col justify-center items-start max-w-[1000px] overflow-visible p-0 content-start gap-10">
-          <div className="w-[193px] h-[128px] relative overflow-visible block">
+    <main className="w-full mt-10 h-min min-h-[800px]">
+      <section className="box-border w-full  relative flex flex-col justify-center items-center p-24 content-center gap-2.5 bg-black">
+        <div className="box-border w-full flex flex-col justify-center items-start max-w-[1000px] p-0 content-start gap-10">
+          <div className="w-[193px] h-[128px] relative block">
             <div className="w-[128px] h-[128px] block overflow-hidden aspect-square bg-white rounded-full absolute"></div>
             <div className="w-[128px] h-[128px] block overflow-hidden aspect-square bg-[#98f5e1] left-[64px] rounded-full absolute"></div>
           </div>
@@ -24,7 +24,18 @@ export default function Home() {
           </Link>
         </div>
       </section>
-      <section></section>
+      <section className="box-border relative w-full h-auto p-20 overflow-hidden content-center">
+        <div className="box-border w-full h-auto flex flex-col justify-start items-center overflow-hidden content-center gap-0">
+          <h2 className="w-full h-auto whitespace-pre-wrap break-words font-normal font-sans text-[48px] leading-[1.2] text-left">
+            내 여행 일정 보기
+          </h2>
+          <p>
+            여행 일정을 쉽게 접근하고 관리하세요. 다가오는 여행과 과거의 여행을
+            쉽게 확인하고 관리할 수 있습니다.
+          </p>
+        </div>
+        <div></div>
+      </section>
     </main>
   );
 }

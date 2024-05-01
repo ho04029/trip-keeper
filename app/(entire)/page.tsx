@@ -25,14 +25,22 @@ export default function Home() {
         </div>
       </section>
       <section className="box-border relative w-full h-auto p-20 overflow-hidden content-center">
-        <div className="box-border w-full h-auto flex flex-col justify-start items-center overflow-hidden content-center gap-0">
-          <h2 className="w-full h-auto whitespace-pre-wrap break-words font-normal font-sans text-[48px] leading-[1.2] text-left">
+        <div className="box-border w-full h-auto flex flex-col justify-start overflow-hidden gap-10">
+          <h2 className="w-full h-auto whitespace-pre-wrap break-words font-sans text-[48px] leading-[1.2]">
             내 여행 일정 보기
           </h2>
-          <p>
-            여행 일정을 쉽게 접근하고 관리하세요. 다가오는 여행과 과거의 여행을
-            쉽게 확인하고 관리할 수 있습니다.
+          <p className="w-full h-auto whitespace-pre-wrap break-words font-sans text-[30px] leading-[1.5]">
+            여행 일정을 쉽게 접근하고 관리하세요. <br />
+            다가오는 여행과 과거의 여행을 쉽게 확인하고 관리할 수 있습니다.
           </p>
+          <div className="flex justify-start gap-5 mt-[-5px]">
+            <Link href="/new-trip">
+              <Button variant="outline">여행 일정 계획하기</Button>
+            </Link>
+            <Link href="/">
+              <Button variant="outline">내 여행 일정 보기</Button>
+            </Link>
+          </div>
         </div>
         <div></div>
       </section>

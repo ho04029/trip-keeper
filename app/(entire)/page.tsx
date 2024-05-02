@@ -2,6 +2,7 @@
 import Link from "next/link";
 import useGetMyTripList from "@/container/useGetMyTripList";
 import { Button } from "@/components/ui/button";
+import TripList from "@/container/tripList";
 
 export default function Home() {
   const myTrips = useGetMyTripList();
@@ -42,7 +43,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-        <div></div>
+        {myTrips && <TripList trips={myTrips} />}
       </section>
     </main>
   );

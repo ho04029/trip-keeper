@@ -1,7 +1,11 @@
-import React from "react";
+"use client";
 
-const myTrips = () => {
-  return <div></div>;
+import useGetMyTripList from "@/container/useGetMyTripList";
+import TripList from "@/container/tripList";
+
+const MyTrips = () => {
+  const myTrips = useGetMyTripList();
+  return <div>{myTrips && <TripList trips={myTrips} />}</div>;
 };
 
-export default myTrips;
+export default MyTrips;

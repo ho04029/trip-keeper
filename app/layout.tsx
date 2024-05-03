@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Trip keeper",
   description: "여행 일정과 여행 기록을 통해 여행을 더 즐겁게 추억해 보세요.",
+  icons: {
+    icon: "#",
+  },
 };
 
 export default function RootLayout({

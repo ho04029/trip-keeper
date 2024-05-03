@@ -38,7 +38,7 @@ export default function Home() {
             <Link href="/new-trip">
               <Button variant="outline">여행 일정 계획하기</Button>
             </Link>
-            <Link href="/">
+            <Link href="/my-trips">
               <Button variant="outline">내 여행 일정 보기</Button>
             </Link>
           </div>

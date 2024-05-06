@@ -1,6 +1,6 @@
 "use client";
 
-import useGetMyTripList from "@/container/useGetMyTripList";
+import useGetMyTripList from "@/hooks/use-get-myTripList";
 import TripList from "@/container/tripList";
 
 const MyTrips = () => {

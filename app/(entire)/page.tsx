@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import useGetMyTripList from "@/container/useGetMyTripList";
+import useGetMyTripList from "@/hooks/use-get-myTripList";
 import { Button } from "@/components/ui/button";
 import TripList from "@/container/tripList";
 
@@ -8,7 +8,7 @@ export default function Home() {
   const myTrips = useGetMyTripList();
 
   return (
-    <main className="w-full mt-10 h-min min-h-[800px]">
+    <main className="w-full h-min min-h-[800px]">
       <section className="box-border w-full  relative flex flex-col justify-center items-center p-24 content-center gap-2.5 bg-black">
         <div className="box-border w-full flex flex-col justify-center items-start max-w-[1000px] p-0 content-start gap-10">
           <div className="w-[193px] h-[128px] relative block">

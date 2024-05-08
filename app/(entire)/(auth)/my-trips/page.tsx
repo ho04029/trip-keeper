@@ -5,7 +5,7 @@ import TripList from "@/container/tripList";
 
 const MyTrips = () => {
   const myTrips = useGetMyTripList();
-  return <div>{myTrips && <TripList trips={myTrips} />}</div>;
+  return <div className="p-20">{myTrips && <TripList trips={myTrips} />}</div>;
 };
 
 export default MyTrips;

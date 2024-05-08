@@ -88,9 +88,12 @@ const NewTrip = () => {
   };
 
   return (
-    <main className="absolute top-10">
+    <main className="relative p-20 flex flex-col items-center">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="w-full max-w-96 flex flex-col gap-2.5 justify-center"
+        >
           <FormField
             control={form.control}
             name="title"

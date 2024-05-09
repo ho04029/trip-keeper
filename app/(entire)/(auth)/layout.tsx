@@ -3,11 +3,16 @@
 import React from "react";
 import { redirect } from "next/navigation";
 import { useConvexAuth } from "convex/react";
+import Spinner from "@/components/spinner";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useConvexAuth();
+  const { isAuthenticated, isLoading } = useConvexAuth();
 
-  if (!isAuthenticated) {
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (!isLoading && !isAuthenticated) {
     return redirect("/");
   }
 

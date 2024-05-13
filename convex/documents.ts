@@ -55,3 +55,17 @@ export const getMyTrip = query({
     return trip;
   },
 });
+
+export const getTrip = query({
+  args: { tripId: v.string() },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    const userId = identity?.subject;
+
+    const trip = await ctx.db
+      .query("trip")
+      .filter((q) => q.eq(q.field("_id"), args.tripId))
+      .first();
+  },
+});

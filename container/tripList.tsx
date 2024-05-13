@@ -8,7 +8,7 @@ const TripList = ({ trips }: { trips: ITrip[] }) => {
       {trips.map((trip) => {
         return (
           <div key={trip._id} className="p-5 bg-accent rounded-md">
-            <Link href="/" className="flex flex-col gap-2">
+            <Link href={`/${trip._id}`} className="flex flex-col gap-2">
               <h2>{trip.title}</h2>
               <p>
                 {format(new Date(trip.date.from), "yy년 MM월 dd일")} -{" "}

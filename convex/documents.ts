@@ -67,5 +67,12 @@ export const getTrip = query({
       .query("trip")
       .filter((q) => q.eq(q.field("_id"), args.tripId))
       .first();
+
+    if (trip?.isPublished === true) return trip;
+
+    if (trip?.userId === userId) return trip;
+    else {
+      throw new Error("Not authenticated");
+    }
   },
 });

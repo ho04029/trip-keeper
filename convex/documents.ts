@@ -72,7 +72,7 @@ export const getTrip = query({
 
     if (trip?.userId === userId) return trip;
     else {
-      throw new Error("Not authenticated");
+      return null;
     }
   },
 });
